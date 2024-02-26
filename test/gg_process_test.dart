@@ -4,35 +4,39 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
-import 'package:args/command_runner.dart';
-import 'package:gg_process/gg_process.dart';
+import 'dart:convert';
+
+import 'package:gg_process/src/gg_process.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final messages = <String>[];
-
-  group('GgProcess()', () {
+  group('GgProcess', () {
     // #########################################################################
-    group('exec()', () {
-      test('description of the test ', () async {
-        final ggProcess =
-            GgProcess(param: 'foo', log: (msg) => messages.add(msg));
+    group('run()', () {
+      test('should map to Process.run', () async {
+        final ggProcess = GgProcess();
 
-        await ggProcess.exec();
+        // Make a test call
+        final result = await ggProcess.run('echo', ['Hello World']);
+        expect(result.exitCode, 0);
+        final output = utf8.decode(result.stdout as List<int>);
+        expect(output, contains('Hello World'));
       });
     });
 
     // #########################################################################
-    group('Command', () {
-      test('should allow to run the code from command line', () async {
-        final ggProcess = GgProcessCmd(log: (msg) => messages.add(msg));
+    group('start', () {
+      test('should map to Process.start', () async {
+        final ggProcess = GgProcess();
 
-        final CommandRunner<void> runner = CommandRunner<void>(
-          'ggProcess',
-          'Description goes here.',
-        )..addCommand(ggProcess);
-
-        await runner.run(['ggProcess', '--param', 'foo']);
+        // Make a test call
+        String result = '';
+        final process = await ggProcess.start('echo', ['Hello World']);
+        process.stdout.listen((data) {
+          result = utf8.decode(data);
+        });
+        await process.exitCode;
+        expect(result, contains('Hello World'));
       });
     });
   });

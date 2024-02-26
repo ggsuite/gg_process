@@ -5,18 +5,6 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
-import 'package:gg_process/gg_process.dart';
-
 Future<void> main() async {
-  const param = 'foo';
-
-  final ggProcess = GgProcess(
-    param: param,
-    log: (msg) {},
-  );
-
-  print('Executing with param $param');
-  await ggProcess.exec();
-
-  print('Done.');
+  print('Look into tests to see how GgProcess works');
 }
