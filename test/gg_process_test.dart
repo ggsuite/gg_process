@@ -33,7 +33,7 @@ void main() {
         String result = '';
         final process = await ggProcess.start('echo', ['Hello World']);
         process.stdout.listen((data) {
-          result = utf8.decode(data);
+          result += utf8.decode(data);
         });
         await process.exitCode;
         expect(result, contains('Hello World'));
