@@ -6,4 +6,4 @@ format:
 tests:
   execute: true
 pana:
-  execute: false
+  execute: true
