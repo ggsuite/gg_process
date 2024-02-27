@@ -14,7 +14,7 @@ void main() {
     // #########################################################################
     group('run()', () {
       test('should map to Process.run', () async {
-        final ggProcess = GgProcess();
+        const ggProcess = GgProcess();
 
         // Make a test call
         final result = await ggProcess.run('echo', ['Hello World']);
@@ -27,7 +27,7 @@ void main() {
     // #########################################################################
     group('start', () {
       test('should map to Process.start', () async {
-        final ggProcess = GgProcess();
+        const ggProcess = GgProcess();
 
         // Make a test call
         String result = '';

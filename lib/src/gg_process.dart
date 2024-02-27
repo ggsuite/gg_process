@@ -9,6 +9,9 @@ import 'dart:io';
 
 /// A wrapper around process, to allow mocking
 class GgProcess {
+  /// Default constructor
+  const GgProcess();
+
   // ...........................................................................
   /// Runs a process
   Future<ProcessResult> run(
