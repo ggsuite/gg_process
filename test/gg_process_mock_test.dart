@@ -7,6 +7,7 @@
 import 'dart:io';
 
 import 'package:gg_process/src/gg_process_mock.dart';
+import 'package:gg_process/src/gg_process_start_fake_result.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -48,12 +49,28 @@ void main() {
 
     // #########################################################################
     group('start()', () {
-      test('should throw an unimplemented error', () {
+      test('should throw assertion error when no startFakeResult is set',
+          () async {
         final ggProcess = GgProcessMock();
-        expect(
-          () async => await ggProcess.start('echo', ['Hello World']),
-          throwsUnimplementedError,
+        await expectLater(
+          () => ggProcess.start('echo', ['Hello World']),
+          throwsA(
+            isA<AssertionError>().having(
+              (e) => e.message,
+              'message',
+              'fakeProcess must be set',
+            ),
+          ),
         );
+      });
+
+      // .......................................................................
+      test('should return the fake result specified in constructor', () async {
+        final process = ProcessStartFakeResult();
+        final ggProcess = GgProcessMock(startFakeResult: process);
+        final result = await ggProcess.start('echo', ['Hello World']);
+        expect(result, process);
+        result.kill();
       });
     });
   });

@@ -15,10 +15,13 @@ import 'package:gg_process/gg_process.dart';
 /// Creates a fake environment for running processes
 class GgProcessMock implements GgProcess {
   /// Creates a fake process environment
-  /// - [fakeResult] the fake result the process will return
+  /// - [fakeResult] will be returned by [run]
+  /// - [startFakeResult] will be returned by [start]
   GgProcessMock({
     ProcessResult? fakeResult,
-  }) : _processResult = fakeResult ?? ProcessResult(0, 0, '', '');
+    Process? startFakeResult,
+  })  : _processResult = fakeResult ?? ProcessResult(0, 0, '', ''),
+        _fakeProcess = startFakeResult;
 
   /// All calls of run
   final List<CallArguments> calls = [];
@@ -61,12 +64,13 @@ class GgProcessMock implements GgProcess {
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) {
-    // Todo: Implement when needed
-    throw UnimplementedError();
+    assert(_fakeProcess != null, 'fakeProcess must be set');
+    return Future.value(_fakeProcess!);
   }
 
   // ...........................................................................
   final ProcessResult _processResult;
+  final Process? _fakeProcess;
 }
 
 // #############################################################################
