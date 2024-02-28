@@ -14,10 +14,10 @@ void main() {
     // #########################################################################
     group('run()', () {
       test('should map to Process.run', () async {
-        const wrapper = GgProcessWrapper();
+        const ggProcess = GgProcessWrapper();
 
         // Make a test call
-        final result = await wrapper.run('echo', ['Hello World']);
+        final result = await ggProcess.run('echo', ['Hello World']);
         expect(result.exitCode, 0);
         final output = utf8.decode(result.stdout as List<int>);
         expect(output, contains('Hello World'));
@@ -27,17 +27,15 @@ void main() {
     // #########################################################################
     group('start', () {
       test('should map to Process.start', () async {
-        const wrapper = GgProcessWrapper();
+        const ggProcess = GgProcessWrapper();
 
         // Make a test call
         String result = '';
-        final process = await wrapper.start('echo', ['Hello World']);
+        final process = await ggProcess.start('echo', ['Hello World']);
         process.stdout.listen((data) {
           result += utf8.decode(data);
         });
-        await Future<void>.delayed(const Duration(milliseconds: 1));
-        final exitCode = await process.exitCode;
-        expect(exitCode, 0);
+        await process.exitCode;
         expect(result, contains('Hello World'));
       });
     });

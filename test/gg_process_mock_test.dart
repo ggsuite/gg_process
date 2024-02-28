@@ -4,74 +4,66 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
-import 'dart:io';
+import 'dart:convert';
 
-import 'package:gg_process/src/gg_process_mock.dart';
-import 'package:gg_process/src/gg_process_start_fake_result.dart';
+import 'package:gg_process/gg_process.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('GgProcessMock', () {
-    // #########################################################################
-    group('run()', () {
-      test('should return the fake result specified in constructor', () async {
-        final fakeResult = ProcessResult(0, 0, 'Faked Result', '');
-        final ggProcess = GgProcessMock(fakeResult: fakeResult);
-        final result = await ggProcess.run('echo', ['Hello World']);
-        expect(result, fakeResult);
+    test('should work fine', () async {
+      // Create a new instance of GgProcessMock
+      final process = GgProcessMock();
 
-        // Should also fill calls with the call parameters
-        expect(ggProcess.calls, hasLength(1));
+      // Create a new instance of GgProcessMock and pass the instance of
+      // GgProcessMock to it
+      final processWrapper = GgProcessWrapperMock(
+        onStart: (_) => process,
+      );
 
-        final expectedCall = CallArguments(
-          executable: 'echo',
-          arguments: ['Hello World'],
-          workingDirectory: null,
-          environment: null,
-          includeParentEnvironment: true,
-          runInShell: false,
-          stdoutEncoding: null,
-          stderrEncoding: null,
-        );
-        expect(ggProcess.calls.first, expectedCall);
+      // start the process
+      final result = await processWrapper.start('executable', ['arg1', 'arg2']);
+      expect(result, process);
 
-        // call.dryRun should be false, because no --dry-run argument was given
-        expect(ggProcess.calls.first.dryRun, false);
+      // Listen to the stdout and stderr streams, as well as the exitCode
+      final stdouts = <String>[];
+      result.stdout.map((event) => utf8.decode(event)).listen(stdouts.add);
 
-        // call.dryRun should be true, when --dry-run argument was given
-        ggProcess.run('echo', ['Hello World', '--dry-run']);
-        expect(ggProcess.calls.last.dryRun, true);
+      final stderrs = <String>[];
+      result.stderr.map((event) => utf8.decode(event)).listen(stderrs.add);
 
-        // call.hashCode should be the same as expectedCall.hashCode
-        expect(expectedCall.hashCode, ggProcess.calls.first.hashCode);
-      });
-    });
+      // Push some data to the stdout
+      process.pushToStdout.add('stdout1');
+      expect(stdouts, ['stdout1']);
+      process.pushToStdout.add('stdout2');
+      expect(stdouts, ['stdout1', 'stdout2']);
 
-    // #########################################################################
-    group('start()', () {
-      test('should throw assertion error when no startFakeResult is set',
-          () async {
-        final ggProcess = GgProcessMock();
-        await expectLater(
-          () => ggProcess.start('echo', ['Hello World']),
-          throwsA(
-            isA<AssertionError>().having(
-              (e) => e.message,
-              'message',
-              'fakeProcess must be set',
-            ),
-          ),
-        );
-      });
+      // Push some data to the stderr
+      process.pushToStderr.add('stderr1');
+      expect(stderrs, ['stderr1']);
+      process.pushToStderr.add('stderr2');
+      expect(stderrs, ['stderr1', 'stderr2']);
 
-      // .......................................................................
-      test('should return the fake result specified in constructor', () async {
-        final process = ProcessStartFakeResult();
-        final ggProcess = GgProcessMock(startFakeResult: process);
-        final result = await ggProcess.start('echo', ['Hello World']);
-        expect(result, process);
-        result.kill();
-      });
+      // Push the exitCode
+      process.exit(5);
+      final exitCode = await process.exitCode;
+      expect(exitCode, 5);
+
+      // Check if the stdout and stderr streams are closed
+      expect(process.pushToStdout.isClosed, isTrue);
+      expect(process.pushToStderr.isClosed, isTrue);
+
+      // Should throw an UnimplementedError when stdin is called
+      expect(() => result.stdin, throwsA(isA<UnimplementedError>()));
+
+      // PID should be 0
+      expect(result.pid, 0);
+
+      // Kill the process
+      final isNotNull = result.kill();
+      expect(isNotNull, isTrue);
+
+      expect(true, isNotNull);
     });
   });
 }

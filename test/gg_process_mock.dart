@@ -6,22 +6,24 @@
 
 import 'dart:convert';
 
-import 'package:gg_process/src/gg_process_mock.dart';
-import 'package:gg_process/src/gg_process_start_fake_result.dart';
+import 'package:gg_process/gg_process.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('GgProcessStartFakeResult', () {
+  group('GgProcessMock', () {
     test('should work fine', () async {
-      // Create a new instance of GgProcessStartFakeResult
-      final process = ProcessStartFakeResult();
+      // Create a new instance of GgProcessMock
+      final process = GgProcessMock();
 
       // Create a new instance of GgProcessMock and pass the instance of
-      // GgProcessStartFakeResult to it
-      final ggProcess = GgProcessMock(startFakeResult: process);
+      // GgProcessMock to it
+      final processWrapper = GgProcessWrapperMock(
+        onStart: (_) => process,
+      );
 
       // start the process
-      final result = await ggProcess.start('executable', ['arg1', 'arg2']);
+      final result = await processWrapper.start('executable', ['arg1', 'arg2']);
+      expect(result, process);
 
       // Listen to the stdout and stderr streams, as well as the exitCode
       final stdouts = <String>[];

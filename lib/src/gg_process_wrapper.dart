@@ -8,9 +8,9 @@ import 'dart:convert';
 import 'dart:io';
 
 /// A wrapper around process, to allow mocking
-class GgProcess {
+class GgProcessWrapper {
   /// Default constructor
-  const GgProcess();
+  const GgProcessWrapper();
 
   // ...........................................................................
   /// Runs a process
@@ -46,7 +46,7 @@ class GgProcess {
     bool includeParentEnvironment = true,
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
-  }) async {
+  }) {
     return Process.start(
       executable,
       arguments,
