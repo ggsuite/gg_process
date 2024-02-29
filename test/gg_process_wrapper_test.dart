@@ -4,6 +4,7 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:gg_process/gg_process.dart';
@@ -30,12 +31,21 @@ void main() {
         const ggProcess = GgProcessWrapper();
 
         // Make a test call
+        final done = Completer<void>();
         String result = '';
         final process = await ggProcess.start('echo', ['Hello World']);
-        process.stdout.listen((data) {
-          result += utf8.decode(data);
-        });
+        process.stdout.listen(
+          (data) {
+            result += utf8.decode(data);
+          },
+          onDone: () {
+            done.complete();
+          },
+        );
+
         await process.exitCode;
+        await done.future;
+
         expect(result, contains('Hello World'));
       });
     });
