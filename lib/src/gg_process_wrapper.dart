@@ -31,8 +31,8 @@ class GgProcessWrapper {
       environment: environment,
       includeParentEnvironment: includeParentEnvironment,
       runInShell: runInShell,
-      stdoutEncoding: stdoutEncoding,
-      stderrEncoding: stderrEncoding,
+      stdoutEncoding: stdoutEncoding ?? utf8,
+      stderrEncoding: stderrEncoding ?? utf8,
     );
   }
 

@@ -20,7 +20,7 @@ void main() {
         // Make a test call
         final result = await ggProcess.run('echo', ['Hello World']);
         expect(result.exitCode, 0);
-        final output = utf8.decode(result.stdout as List<int>);
+        final output = result.stdout;
         expect(output, contains('Hello World'));
       });
     });

@@ -39,7 +39,7 @@ void main() {
         expect(processWrapper.calls.first.dryRun, false);
 
         // call.dryRun should be true, when --dry-run argument was given
-        processWrapper.run('echo', ['Hello World', '--dry-run']);
+        await processWrapper.run('echo', ['Hello World', '--dry-run']);
         expect(processWrapper.calls.last.dryRun, true);
 
         // call.hashCode should be the same as expectedCall.hashCode
