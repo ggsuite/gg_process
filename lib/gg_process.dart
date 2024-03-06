@@ -6,5 +6,5 @@
 
 library;
 
-export 'src/gg_process_mock.dart';
+export 'src/gg_fake_process.dart';
 export 'src/gg_process_wrapper.dart';

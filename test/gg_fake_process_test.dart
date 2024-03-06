@@ -11,13 +11,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('GgProcessMock', () {
+  group('GgFakeProcess', () {
     test('should work fine', () async {
-      // Create a new instance of GgProcessMock
-      final process = GgProcessMock();
+      // Create a new instance of GgFakeProcess
+      final process = GgFakeProcess();
 
-      // Create a new instance of GgProcessMock and pass the instance of
-      // GgProcessMock to it
+      // Create a new instance of GgFakeProcess and pass the instance of
+      // GgFakeProcess to it
       final processWrapper = MockGgProcessWrapper();
       when(() => processWrapper.start(any(), any())).thenAnswer((_) async {
         return process;

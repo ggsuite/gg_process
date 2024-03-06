@@ -8,9 +8,9 @@ import 'dart:async';
 import 'dart:io';
 
 /// A wrapper around process, to allow mocking
-class GgProcessMock implements Process {
+class GgFakeProcess implements Process {
   /// Default constructor
-  GgProcessMock();
+  GgFakeProcess();
 
   /// Use this to define messages appearing at stdout
   void exit(int exitCode) {
