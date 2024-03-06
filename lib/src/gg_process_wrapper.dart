@@ -7,6 +7,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:mocktail/mocktail.dart';
+
 /// A wrapper around process, to allow mocking
 class GgProcessWrapper {
   /// Default constructor
@@ -58,3 +60,7 @@ class GgProcessWrapper {
     );
   }
 }
+
+// #############################################################################
+/// A mock for [GgProcessWrapper]
+class MockGgProcessWrapper extends Mock implements GgProcessWrapper {}

@@ -7,6 +7,7 @@
 import 'dart:convert';
 
 import 'package:gg_process/gg_process.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -17,9 +18,10 @@ void main() {
 
       // Create a new instance of GgProcessMock and pass the instance of
       // GgProcessMock to it
-      final processWrapper = GgProcessWrapperMock(
-        onStart: (_) => process,
-      );
+      final processWrapper = MockGgProcessWrapper();
+      when(() => processWrapper.start(any(), any())).thenAnswer((_) async {
+        return process;
+      });
 
       // start the process
       final result = await processWrapper.start('executable', ['arg1', 'arg2']);
