@@ -27,6 +27,21 @@ class GgFakeProcess implements Process {
     }
   }
 
+  /// Exit with an exception
+  void exitWithException(Object excpetion) {
+    if (!pushToStdout.isClosed) {
+      pushToStdout.close();
+    }
+
+    if (!pushToStderr.isClosed) {
+      pushToStderr.close();
+    }
+
+    if ((!_exitCompleter.isCompleted)) {
+      _exitCompleter.completeError(excpetion);
+    }
+  }
+
   /// Use this to define messages appearing at stderr
   final pushToStderr = StreamController<String>.broadcast(sync: true);
 

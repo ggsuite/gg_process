@@ -1,6 +1,6 @@
 name: gg_process
 description: GgProcess is a wrapper around Process.run and Process.start. It allows us to mock the execution of console programs.
-version: 1.0.7
+version: 1.1.0
 repository: https://github.com/inlavigo/gg_process.git
 
 environment:
@@ -12,10 +12,10 @@ dependencies:
   colorize: ^3.0.0
   path: ^1.8.0
   mocktail: ^1.0.3
+  gg: ^1.0.2
 
 dev_dependencies:
   gg_capture_print: ^1.0.2
-  gg_check: ^1.0.2
   lints: ^3.0.0
   pana: ^0.22.1
   test: ^1.24.0

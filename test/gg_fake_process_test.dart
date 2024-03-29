@@ -67,5 +67,37 @@ void main() {
 
       expect(true, isNotNull);
     });
+
+    group('exitWithException(exception)', () {
+      test('should finish the process', () async {
+        // Create a new instance of GgFakeProcess
+        final process = GgFakeProcess();
+
+        // Create a new instance of GgFakeProcess and pass the instance of
+        // GgFakeProcess to it
+        final processWrapper = MockGgProcessWrapper();
+        when(() => processWrapper.start(any(), any())).thenAnswer((_) async {
+          return process;
+        });
+
+        // start the process
+        final result =
+            await processWrapper.start('executable', ['arg1', 'arg2']);
+        expect(result, process);
+
+        // Let the process exit with an exception
+        process.exitWithException(Exception('An exception'));
+
+        late String exception;
+
+        try {
+          await process.exitCode;
+        } catch (e) {
+          exception = e.toString();
+        }
+
+        expect(exception, 'Exception: An exception');
+      });
+    });
   });
 }
