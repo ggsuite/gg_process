@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.1
+
+- Add latest dependencies
+
 ## 1.1.0
 
 - Add `GgFakeProcess:exitWithException`
