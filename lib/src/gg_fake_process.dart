@@ -7,6 +7,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:mocktail/mocktail.dart';
+
+/// A mock for [IOSink]
+class MockIOSink extends Mock implements IOSink {}
+
 /// A wrapper around process, to allow mocking
 class GgFakeProcess implements Process {
   /// Default constructor
@@ -60,7 +65,7 @@ class GgFakeProcess implements Process {
       );
 
   @override
-  IOSink get stdin => throw UnimplementedError();
+  MockIOSink get stdin => _stdInSink;
 
   @override
   int get pid => 0;
@@ -72,4 +77,5 @@ class GgFakeProcess implements Process {
   }
 
   final _exitCompleter = Completer<int>();
+  final _stdInSink = MockIOSink();
 }

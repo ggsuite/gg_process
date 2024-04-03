@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2
+
+- `GgFakeProcess.stdin` returns a mock now
+
 ## 1.1.1
 
 - Add latest dependencies

@@ -55,8 +55,8 @@ void main() {
       expect(process.pushToStdout.isClosed, isTrue);
       expect(process.pushToStderr.isClosed, isTrue);
 
-      // Should throw an UnimplementedError when stdin is called
-      expect(() => result.stdin, throwsA(isA<UnimplementedError>()));
+      // Write some data to the stdin
+      process.stdin.write('stdin1');
 
       // PID should be 0
       expect(result.pid, 0);
