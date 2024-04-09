@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.4] - 2024-04-09
 
 ### Removed
 
@@ -30,5 +30,5 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_process/compare/1.1.3...HEAD
+[1.1.4]: https://github.com/inlavigo/gg_process/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/inlavigo/gg_process/compare/1.1.2...1.1.3
