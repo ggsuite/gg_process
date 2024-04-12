@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.5] - 2024-04-12
+
+### Removed
+
+- dependency to gg\_install\_gg, remove ./check script
+
 ## [1.1.4] - 2024-04-09
 
 ### Removed
@@ -30,5 +36,6 @@
 
 - Initial version.
 
+[1.1.5]: https://github.com/inlavigo/gg_process/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/inlavigo/gg_process/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/inlavigo/gg_process/compare/1.1.2...1.1.3
