@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.6] - 2024-04-13
+
+### Removed
+
+- dependency pana
+
 ## [1.1.5] - 2024-04-12
 
 ### Removed
@@ -36,6 +42,7 @@
 
 - Initial version.
 
+[1.1.6]: https://github.com/inlavigo/gg_process/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/inlavigo/gg_process/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/inlavigo/gg_process/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/inlavigo/gg_process/compare/1.1.2...1.1.3
