@@ -81,8 +81,10 @@ void main() {
         });
 
         // start the process
-        final result =
-            await processWrapper.start('executable', ['arg1', 'arg2']);
+        final result = await processWrapper.start('executable', [
+          'arg1',
+          'arg2',
+        ]);
         expect(result, process);
 
         // Let the process exit with an exception

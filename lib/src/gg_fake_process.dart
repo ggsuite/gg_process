@@ -56,13 +56,11 @@ class GgFakeProcess implements Process {
   @override
   Future<int> get exitCode => _exitCompleter.future;
   @override
-  Stream<List<int>> get stdout => pushToStdout.stream.map(
-        (event) => event.codeUnits,
-      );
+  Stream<List<int>> get stdout =>
+      pushToStdout.stream.map((event) => event.codeUnits);
   @override
-  Stream<List<int>> get stderr => pushToStderr.stream.map(
-        (event) => event.codeUnits,
-      );
+  Stream<List<int>> get stderr =>
+      pushToStderr.stream.map((event) => event.codeUnits);
 
   @override
   MockIOSink get stdin => _stdInSink;
