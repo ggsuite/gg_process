@@ -9,7 +9,13 @@ import 'dart:io';
 
 import 'package:mocktail/mocktail.dart';
 
+import 'gg_process_delegate.dart';
+
 /// A wrapper around process, to allow mocking
+///
+/// The actual execution is performed by [GgProcessDelegate.current], so an
+/// embedder can redirect every process gg starts — see
+/// [GgProcessDelegate].
 class GgProcessWrapper {
   /// Default constructor
   const GgProcessWrapper();
@@ -26,7 +32,7 @@ class GgProcessWrapper {
     Encoding? stdoutEncoding,
     Encoding? stderrEncoding,
   }) async {
-    return Process.run(
+    return GgProcessDelegate.current.run(
       executable,
       arguments,
       workingDirectory: workingDirectory,
@@ -49,7 +55,7 @@ class GgProcessWrapper {
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) {
-    return Process.start(
+    return GgProcessDelegate.current.start(
       executable,
       arguments,
       workingDirectory: workingDirectory,

@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `GgProcessDelegate.current` performs every process the gg suite starts,
+  and can be replaced. `GgProcessWrapper` routes through it, as do the new
+  `ggRunProcess` / `ggStartProcess` drop-in replacements for `Process.run`
+  and `Process.start`.
+- `GgPlatformDelegate.current` answers the `Platform` questions and holds
+  the exit code (`ggExitCode`), so a build without a working `dart:io` can
+  answer them itself.
+
 ## [Unreleased]
 
 ### Added
