@@ -1,30 +1,42 @@
 # Changelog
 
-## [Unreleased]
+## 1.1.7 - 2026-08-11
 
 ### Added
 
+- `GgProcessDelegate.current` performs every process the gg suite starts,
+and can be replaced. `GgProcessWrapper` routes through it, as do the new
+`ggRunProcess` / `ggStartProcess` drop-in replacements for `Process.run`
+and `Process.start`.
+- `GgPlatformDelegate.current` answers the `Platform` questions and holds
+the exit code (`ggExitCode`), so a build without a working `dart:io` can
+answer them itself.
 - Add .gitattributes file
 
-## [1.1.6] - 2024-04-13
+### Changed
+
+- Provide gg via npm
+- Fix shell changes
+
+## 1.1.6 - 2024-04-13
 
 ### Removed
 
 - dependency pana
 
-## [1.1.5] - 2024-04-12
+## 1.1.5 - 2024-04-12
 
 ### Removed
 
-- dependency to gg\_install\_gg, remove ./check script
+- dependency to gg_install_gg, remove ./check script
 
-## [1.1.4] - 2024-04-09
+## 1.1.4 - 2024-04-09
 
 ### Removed
 
 - 'Pipline: Disable cache'
 
-## [1.1.3] - 2024-04-09
+## 1.1.3 - 2024-04-09
 
 ### Changed
 
@@ -47,9 +59,3 @@
 ## 1.0.7 - 2024-01-01
 
 - Initial version.
-
-[Unreleased]: https://github.com/inlavigo/gg_process/compare/1.1.6...HEAD
-[1.1.6]: https://github.com/inlavigo/gg_process/compare/1.1.5...1.1.6
-[1.1.5]: https://github.com/inlavigo/gg_process/compare/1.1.4...1.1.5
-[1.1.4]: https://github.com/inlavigo/gg_process/compare/1.1.3...1.1.4
-[1.1.3]: https://github.com/inlavigo/gg_process/compare/1.1.2...1.1.3
