@@ -16,6 +16,7 @@ answer them itself.
 ### Changed
 
 - Provide gg via npm
+- Fix shell changes
 
 ## 1.1.6 - 2024-04-13
 
