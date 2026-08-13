@@ -9,4 +9,4 @@
 // coverage:ignore-file
 
 /// The version of the `gg_process` package.
-const String ggProcessVersion = '1.1.7';
+const String ggProcessVersion = '1.2.0';

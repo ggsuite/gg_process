@@ -1,5 +1,5 @@
 // @license
-// Copyright (c) 2019 - 2024 Dr. Gabriel Gatzsche. All Rights Reserved.
+// Copyright (c) ggsuite
 //
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
@@ -83,17 +83,16 @@ class GgProcessDelegate {
 /// Signature of `Process.run`, used as an injection point in several gg
 /// packages. Use [ggRunProcess] as default instead of `Process.run` so the
 /// call is routed through [GgProcessDelegate.current].
-typedef GgRunProcess =
-    Future<ProcessResult> Function(
-      String executable,
-      List<String> arguments, {
-      String? workingDirectory,
-      Map<String, String>? environment,
-      bool includeParentEnvironment,
-      bool runInShell,
-      Encoding? stdoutEncoding,
-      Encoding? stderrEncoding,
-    });
+typedef GgRunProcess = Future<ProcessResult> Function(
+  String executable,
+  List<String> arguments, {
+  String? workingDirectory,
+  Map<String, String>? environment,
+  bool includeParentEnvironment,
+  bool runInShell,
+  Encoding? stdoutEncoding,
+  Encoding? stderrEncoding,
+});
 
 // .............................................................................
 /// Drop-in replacement for `Process.run` routing through
