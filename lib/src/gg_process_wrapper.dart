@@ -9,6 +9,7 @@ import 'dart:io';
 
 import 'package:mocktail/mocktail.dart';
 
+import 'gg_platform_delegate.dart';
 import 'gg_process_delegate.dart';
 
 /// A wrapper around process, to allow mocking
@@ -38,7 +39,7 @@ class GgProcessWrapper {
       workingDirectory: workingDirectory,
       environment: environment,
       includeParentEnvironment: includeParentEnvironment,
-      runInShell: runInShell,
+      runInShell: runInShell || needsShell(executable),
       stdoutEncoding: stdoutEncoding ?? utf8,
       stderrEncoding: stderrEncoding ?? utf8,
     );
@@ -61,10 +62,48 @@ class GgProcessWrapper {
       workingDirectory: workingDirectory,
       environment: environment,
       includeParentEnvironment: includeParentEnvironment,
-      runInShell: runInShell,
+      runInShell: runInShell || needsShell(executable),
       mode: mode,
     );
   }
+}
+
+// .............................................................................
+/// Whether [executable] must run through the shell: on Windows, a command
+/// that the PATH holds as a batch file only, e.g. `flutter.bat`, does not
+/// start without `cmd.exe`. A `.exe` or `.com` found first starts
+/// directly, as an unknown command does, which then fails as before.
+bool needsShell(String executable, {GgPlatformDelegate? platform}) {
+  platform ??= GgPlatformDelegate.current;
+  if (!platform.isWindows) return false;
+
+  final lower = executable.toLowerCase();
+  if (lower.endsWith('.bat') || lower.endsWith('.cmd')) return true;
+  if (lower.contains('.') && !lower.startsWith('.')) return false;
+
+  final path = _windowsVariable(platform.environment, 'PATH') ?? '';
+  for (final directory in path.split(';')) {
+    if (directory.isEmpty) continue;
+    for (final extension in const ['.exe', '.com']) {
+      if (File('$directory/$executable$extension').existsSync()) {
+        return false;
+      }
+    }
+    for (final extension in const ['.bat', '.cmd']) {
+      if (File('$directory/$executable$extension').existsSync()) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/// The variable [name] of [environment], whose names Windows does not case.
+String? _windowsVariable(Map<String, String> environment, String name) {
+  for (final entry in environment.entries) {
+    if (entry.key.toUpperCase() == name) return entry.value;
+  }
+  return null;
 }
 
 // #############################################################################
