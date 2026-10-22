@@ -43,6 +43,8 @@ found in the LICENSE file in the root of this package.
 - In each PATH directory, `.exe` and `.com` are checked first and return
   false; `.bat` and `.cmd` follow and return true.
 - Unknown executables return false.
+- The answer is cached per command and PATH: a gg check starts hundreds
+  of processes, and the walk costs up to four file lookups per folder.
 
 ```mermaid
 flowchart TD

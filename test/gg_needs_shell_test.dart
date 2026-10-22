@@ -69,6 +69,17 @@ void main() {
       expect(needsShell('unknown', platform: windows), isFalse);
     });
 
+    test('looks the PATH up once per command and PATH', () {
+      final windows = _Platform('windows', batDir.path);
+      expect(needsShell('cached', platform: windows), isFalse);
+      File('${batDir.path}/cached.bat').writeAsStringSync('');
+      // The first answer holds for the same command and PATH.
+      expect(needsShell('cached', platform: windows), isFalse);
+      // Another PATH is looked up anew.
+      final other = _Platform('windows', ';${batDir.path}');
+      expect(needsShell('cached', platform: other), isTrue);
+    });
+
     test('takes the current platform by default', () {
       expect(needsShell('unknown-command-of-gg'), isFalse);
     });

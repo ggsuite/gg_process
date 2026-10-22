@@ -82,6 +82,19 @@ bool needsShell(String executable, {GgPlatformDelegate? platform}) {
   if (lower.contains('.') && !lower.startsWith('.')) return false;
 
   final path = _windowsVariable(platform.environment, 'PATH') ?? '';
+  return _needsShellCache.putIfAbsent(
+    '$lower\n$path',
+    () => _isBatchOnPath(executable, path),
+  );
+}
+
+/// What [needsShell] found per command and PATH: a gg check starts hundreds
+/// of processes, and the PATH walk costs up to four file lookups per folder.
+final _needsShellCache = <String, bool>{};
+
+/// Whether the first folder of [path] that holds [executable] holds it as a
+/// batch file.
+bool _isBatchOnPath(String executable, String path) {
   for (final directory in path.split(';')) {
     if (directory.isEmpty) continue;
     for (final extension in const ['.exe', '.com']) {
