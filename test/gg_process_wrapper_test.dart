@@ -10,6 +10,8 @@ import 'dart:convert';
 import 'package:gg_process/gg_process.dart';
 import 'package:test/test.dart';
 
+import 'echo.dart';
+
 void main() {
   group('GgProcess', () {
     // #########################################################################
@@ -18,7 +20,10 @@ void main() {
         const ggProcess = GgProcessWrapper();
 
         // Make a test call
-        final result = await ggProcess.run('echo', ['Hello World']);
+        final result = await ggProcess.run(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         expect(result.exitCode, 0);
         final output = result.stdout;
         expect(output, contains('Hello World'));
@@ -33,7 +38,10 @@ void main() {
         // Make a test call
         final done = Completer<void>();
         String result = '';
-        final process = await ggProcess.start('echo', ['Hello World']);
+        final process = await ggProcess.start(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         process.stdout.listen(
           (data) {
             result += utf8.decode(data);

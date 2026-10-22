@@ -10,6 +10,8 @@ import 'dart:io';
 import 'package:gg_process/gg_process.dart';
 import 'package:test/test.dart';
 
+import 'echo.dart';
+
 // .............................................................................
 /// Records the calls it receives instead of executing anything.
 class _RecordingDelegate extends GgProcessDelegate {
@@ -56,17 +58,19 @@ void main() {
     // #########################################################################
     group('defaultDelegate', () {
       test('runs a process using dart:io', () async {
-        final result = await GgProcessDelegate.defaultDelegate.run('echo', [
-          'Hello World',
-        ]);
+        final result = await GgProcessDelegate.defaultDelegate.run(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         expect(result.exitCode, 0);
         expect(result.stdout, contains('Hello World'));
       });
 
       test('starts a process using dart:io', () async {
-        final process = await GgProcessDelegate.defaultDelegate.start('echo', [
-          'Hello World',
-        ]);
+        final process = await GgProcessDelegate.defaultDelegate.start(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         expect(await process.exitCode, 0);
       });
 
@@ -125,14 +129,17 @@ void main() {
       });
 
       test('runs the real process when no delegate is installed', () async {
-        final result = await ggRunProcess('echo', ['Hello World']);
+        final result = await ggRunProcess(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         expect(result.exitCode, 0);
         expect(result.stdout, contains('Hello World'));
       });
 
       test('matches the GgRunProcess signature', () async {
         const GgRunProcess runner = ggRunProcess;
-        final result = await runner('echo', ['Hi']);
+        final result = await runner(echoCommand, echoArgs(['Hi']));
         expect(result.exitCode, 0);
       });
     });
@@ -149,7 +156,10 @@ void main() {
       });
 
       test('starts the real process when no delegate is installed', () async {
-        final process = await ggStartProcess('echo', ['Hello World']);
+        final process = await ggStartProcess(
+          echoCommand,
+          echoArgs(['Hello World']),
+        );
         expect(await process.exitCode, 0);
       });
     });
