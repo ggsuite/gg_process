@@ -22,15 +22,15 @@ question and never as a plain prose question:
 
 - Replace `~/dev/` by the workspace directory from the memory
 - Ask for the workspace directory if none is known
-- Replace `gGS-145` by the ticket ID you asked for
+- Replace `GGS-145` by the ticket ID you asked for
 - Replace `Fix issue abc` by the ticket title you asked for
 
 ## Create a ticket
 
 ```bash
 cd ~/dev/ # workspace
-gg do create ticket gGS-145 -m"Fix issue abc"
-cd tickets/gGS-145
+gg do create ticket GGS-145 -m"Fix issue abc"
+cd tickets/GGS-145
 ```
 
 ## Choose the project management repo — or work without one
@@ -186,7 +186,8 @@ Afterwards load the review-light skill and execute it.
 
 ## Publish
 
-- Create a blog post for the current ticket
+- Run `/blog` in every repo of the ticket that has
+  `doc/guides/blog-guide.md`, the project management repo included
 - Update the index.jsonc and README.md
 - Check `mergeMessage` and `versionIncrement` in `.gg/publish_config.json`
   of each repo — `gg do publish` offers them as defaults
