@@ -8,6 +8,7 @@
 - Echo through cmd in the tests on Windows
 - Document the Windows support of ticket gg-1
 - Apply the review of ticket gg-1
+- Upgrade the dependencies
 
 ## 1.3.0 - 2026-09-02
 
