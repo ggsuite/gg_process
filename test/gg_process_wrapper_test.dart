@@ -7,8 +7,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'dart:io';
+
 import 'package:gg_process/gg_process.dart';
 import 'package:test/test.dart';
+
+/// The running Dart executable: a real program on every operating system.
+final _dart = Platform.resolvedExecutable;
 
 void main() {
   group('GgProcess', () {
@@ -18,10 +23,10 @@ void main() {
         const ggProcess = GgProcessWrapper();
 
         // Make a test call
-        final result = await ggProcess.run('echo', ['Hello World']);
+        final result = await ggProcess.run(_dart, ['--version']);
         expect(result.exitCode, 0);
         final output = result.stdout;
-        expect(output, contains('Hello World'));
+        expect(output, contains('Dart'));
       });
     });
 
@@ -33,7 +38,7 @@ void main() {
         // Make a test call
         final done = Completer<void>();
         String result = '';
-        final process = await ggProcess.start('echo', ['Hello World']);
+        final process = await ggProcess.start(_dart, ['--version']);
         process.stdout.listen(
           (data) {
             result += utf8.decode(data);
@@ -46,7 +51,7 @@ void main() {
         await process.exitCode;
         await done.future;
 
-        expect(result, contains('Hello World'));
+        expect(result, contains('Dart'));
       });
     });
   });

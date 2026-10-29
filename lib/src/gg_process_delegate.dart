@@ -7,6 +7,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'gg_windows_executable.dart';
+
 /// Performs the actual process execution for the whole gg suite.
 ///
 /// `dart compile wasm` emits a `dart:io` whose `Process.run` and
@@ -18,7 +20,8 @@ import 'dart:io';
 /// e.g. Node's `child_process`.
 ///
 /// The default implementation calls `dart:io` and is what native `gg`
-/// builds use.
+/// builds use. On Windows it starts batch files such as `flutter` by their
+/// full path, see [GgWindowsExecutable].
 class GgProcessDelegate {
   /// Default constructor
   const GgProcessDelegate();
@@ -35,7 +38,7 @@ class GgProcessDelegate {
     Encoding? stdoutEncoding = systemEncoding,
     Encoding? stderrEncoding = systemEncoding,
   }) => Process.run(
-    executable,
+    _executable(executable, runInShell),
     arguments,
     workingDirectory: workingDirectory,
     environment: environment,
@@ -56,7 +59,7 @@ class GgProcessDelegate {
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) => Process.start(
-    executable,
+    _executable(executable, runInShell),
     arguments,
     workingDirectory: workingDirectory,
     environment: environment,
@@ -77,6 +80,19 @@ class GgProcessDelegate {
   static const GgProcessDelegate defaultDelegate = GgProcessDelegate();
 
   static GgProcessDelegate _current = defaultDelegate;
+
+  // ######################
+  // Private
+  // ######################
+
+  // ...........................................................................
+
+  static final _windowsExecutable = GgWindowsExecutable();
+
+  // ...........................................................................
+  /// A shell finds batch files itself; without one, run them by full path.
+  String _executable(String executable, bool runInShell) =>
+      runInShell ? executable : _windowsExecutable.resolve(executable);
 }
 
 // .............................................................................

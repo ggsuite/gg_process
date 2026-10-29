@@ -49,6 +49,9 @@ class _RecordingDelegate extends GgProcessDelegate {
   }
 }
 
+/// The running Dart executable: a real program on every operating system.
+final _dart = Platform.resolvedExecutable;
+
 void main() {
   tearDown(() => GgProcessDelegate.current = null);
 
@@ -56,16 +59,16 @@ void main() {
     // #########################################################################
     group('defaultDelegate', () {
       test('runs a process using dart:io', () async {
-        final result = await GgProcessDelegate.defaultDelegate.run('echo', [
-          'Hello World',
+        final result = await GgProcessDelegate.defaultDelegate.run(_dart, [
+          '--version',
         ]);
         expect(result.exitCode, 0);
-        expect(result.stdout, contains('Hello World'));
+        expect(result.stdout, contains('Dart'));
       });
 
       test('starts a process using dart:io', () async {
-        final process = await GgProcessDelegate.defaultDelegate.start('echo', [
-          'Hello World',
+        final process = await GgProcessDelegate.defaultDelegate.start(_dart, [
+          '--version',
         ]);
         expect(await process.exitCode, 0);
       });
@@ -125,14 +128,14 @@ void main() {
       });
 
       test('runs the real process when no delegate is installed', () async {
-        final result = await ggRunProcess('echo', ['Hello World']);
+        final result = await ggRunProcess(_dart, ['--version']);
         expect(result.exitCode, 0);
-        expect(result.stdout, contains('Hello World'));
+        expect(result.stdout, contains('Dart'));
       });
 
       test('matches the GgRunProcess signature', () async {
         const GgRunProcess runner = ggRunProcess;
-        final result = await runner('echo', ['Hi']);
+        final result = await runner(_dart, ['--version']);
         expect(result.exitCode, 0);
       });
     });
@@ -149,7 +152,7 @@ void main() {
       });
 
       test('starts the real process when no delegate is installed', () async {
-        final process = await ggStartProcess('echo', ['Hello World']);
+        final process = await ggStartProcess(_dart, ['--version']);
         expect(await process.exitCode, 0);
       });
     });

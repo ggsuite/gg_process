@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Start batch commands such as flutter on Windows without a shell
+
 ## 1.3.0 - 2026-09-02
 
 ### Changed
