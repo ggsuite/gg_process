@@ -14,7 +14,7 @@ dependencies:
   mocktail: ^1.0.5
 
 dev_dependencies:
-  dna_ggsuite: ^1.0.0
+  dna_ggsuite: ^1.0.1
   gg_capture_print: ^1.2.1
   helix: ^1.14.0
   lints: ^6.1.0
