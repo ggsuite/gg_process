@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 - 2026-11-06
+
+### Changed
+
+- Start an executable next to the running one before a batch file of the same name on PATH, as Windows does
+
 ## 1.4.0 - 2026-10-29
 
 ### Changed

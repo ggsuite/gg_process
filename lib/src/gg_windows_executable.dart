@@ -14,6 +14,11 @@ import 'gg_platform_delegate.dart';
 /// Finds the batch file behind a bare command name on Windows. Windows
 /// starts a bare name only as `.exe` or `.com`, so tools shipped as `.bat`
 /// or `.cmd` — `flutter`, `npm`, `pnpm` — fail unless run in a shell.
+///
+/// Before PATH, Windows looks into the folder of the running executable. A
+/// name found there as `.exe` stays as it is, even if PATH holds a batch
+/// file of that name: `dart` started by `dart.exe` is that `dart.exe`, not
+/// the slower `dart.bat` wrapper Flutter puts on PATH.
 class GgWindowsExecutable {
   /// Constructor. Reads [platform], or else [GgPlatformDelegate.current].
   GgWindowsExecutable({this._platform});
@@ -26,7 +31,11 @@ class GgWindowsExecutable {
       return executable;
     }
 
-    return _resolved[executable] ??= _batchFile(executable) ?? executable;
+    return _resolved[executable] ??=
+        (_isNextToRunningExecutable(executable)
+            ? null
+            : _batchFile(executable)) ??
+        executable;
   }
 
   /// An instance for tests.
@@ -55,6 +64,16 @@ class GgWindowsExecutable {
       !executable.contains('/') &&
       !executable.contains(r'\') &&
       p.extension(executable).isEmpty;
+
+  // ...........................................................................
+  /// True when the folder of the running executable holds [name] as `.exe`
+  /// or `.com` — Windows starts that one before searching PATH.
+  bool _isNextToRunningExecutable(String name) {
+    final directory = p.dirname(_platformDelegate.resolvedExecutable);
+    return ['.exe', '.com'].any(
+      (extension) => File(p.join(directory, '$name$extension')).existsSync(),
+    );
+  }
 
   // ...........................................................................
   /// Searches PATH the way cmd does and returns the first match if it is a
