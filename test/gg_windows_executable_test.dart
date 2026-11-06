@@ -13,13 +13,23 @@ import 'package:test/test.dart';
 // .............................................................................
 /// Reports the given operating system and environment.
 class _FakePlatform extends GgPlatformDelegate {
-  _FakePlatform(this.environment, {this.operatingSystem = 'windows'});
+  _FakePlatform(
+    this.environment, {
+    this.operatingSystem = 'windows',
+    this._resolvedExecutable,
+  });
 
   @override
   final Map<String, String> environment;
 
   @override
   final String operatingSystem;
+
+  final String? _resolvedExecutable;
+
+  @override
+  String get resolvedExecutable =>
+      _resolvedExecutable ?? super.resolvedExecutable;
 }
 
 void main() {
@@ -47,11 +57,13 @@ void main() {
     String? path,
     String? pathExt,
     String operatingSystem = 'windows',
+    String? resolvedExecutable,
   }) => GgWindowsExecutable.example(
-    platform: _FakePlatform({
-      'Path': path ?? '$first;$second',
-      'PATHEXT': ?pathExt,
-    }, operatingSystem: operatingSystem),
+    platform: _FakePlatform(
+      {'Path': path ?? '$first;$second', 'PATHEXT': ?pathExt},
+      operatingSystem: operatingSystem,
+      resolvedExecutable: resolvedExecutable,
+    ),
   );
 
   group('GgWindowsExecutable', () {
@@ -78,6 +90,28 @@ void main() {
 
         expect(windowsExecutable.resolve('git'), 'git');
         expect(windowsExecutable.resolve('more'), 'more');
+      });
+
+      test('keeps a name next to the running executable', () {
+        // Windows starts dart.exe from the folder of the running dart.exe
+        // before it searches PATH, where Flutter puts a dart.bat.
+        final sdk = (Directory(p.join(tempDir.path, 'sdk'))..createSync()).path;
+        touch(sdk, 'dart.exe');
+        touch(sdk, 'tool.com');
+        touch(first, 'dart.bat');
+        touch(first, 'tool.bat');
+        touch(first, 'flutter.bat');
+
+        final windowsExecutable = resolver(
+          resolvedExecutable: p.join(sdk, 'dart.exe'),
+        );
+
+        expect(windowsExecutable.resolve('dart'), 'dart');
+        expect(windowsExecutable.resolve('tool'), 'tool');
+        expect(
+          windowsExecutable.resolve('flutter'),
+          p.join(first, 'flutter.bat'),
+        );
       });
 
       test('keeps a name that is not on PATH', () {

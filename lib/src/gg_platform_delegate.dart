@@ -31,6 +31,9 @@ class GgPlatformDelegate {
   /// The character separating path segments, e.g. `/` or `\`.
   String get pathSeparator => io.Platform.pathSeparator;
 
+  /// The full path of the executable running the current process.
+  String get resolvedExecutable => io.Platform.resolvedExecutable;
+
   /// True on Windows.
   bool get isWindows => operatingSystem == 'windows';
 
