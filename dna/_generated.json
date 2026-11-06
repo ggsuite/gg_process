@@ -29,9 +29,9 @@
       "name": "dna-translate",
       "package": "@ggdna/dna-translate",
       "ecosystem": "node",
-      "resolvedVersion": "0.3.0",
+      "resolvedVersion": "0.4.0",
       "via": "dna-ggsuite",
-      "hash": "0xfec6f71367d12db6"
+      "hash": "0x3039779d72fb105f"
     },
     {
       "name": "dna-index",
@@ -93,15 +93,15 @@
       "name": "dna-gg",
       "package": "@ggdna/dna-gg",
       "ecosystem": "node",
-      "resolvedVersion": "1.4.0",
+      "resolvedVersion": "1.5.0",
       "via": "dna-ggsuite",
-      "hash": "0x48d48208a8147228"
+      "hash": "0x59ecfaa7ff05bf15"
     },
     {
       "name": "dna-ggsuite",
       "package": "dna_ggsuite",
       "ecosystem": "pub",
-      "resolvedVersion": "1.0.0",
+      "resolvedVersion": "1.0.1",
       "via": null,
       "hash": "0x309b9f27627022e1"
     },
@@ -139,7 +139,7 @@
     },
     {
       "path": ".claude/hooks/pm-prompts.mjs",
-      "hash": "0xf4266eea17b3b9c1"
+      "hash": "0x6b8fdf7bbbf7c1a5"
     },
     {
       "path": ".claude/settings.json",
@@ -155,7 +155,7 @@
     },
     {
       "path": ".claude/skills/gg-cleanup/SKILL.md",
-      "hash": "0x18bed8466190e180"
+      "hash": "0x634921912309c933"
     },
     {
       "path": ".claude/skills/gg-commit/SKILL.md",
@@ -163,7 +163,7 @@
     },
     {
       "path": ".claude/skills/gg-publish/SKILL.md",
-      "hash": "0xf31f64b24913d9c3"
+      "hash": "0x501ac99a5d586b58"
     },
     {
       "path": ".claude/skills/gg-push/SKILL.md",
@@ -175,11 +175,11 @@
     },
     {
       "path": ".claude/skills/gg-review/SKILL.md",
-      "hash": "0x55b2f0deb18d70d4"
+      "hash": "0x3a4506ccd5c8e1be"
     },
     {
       "path": ".claude/skills/gg-ticket/SKILL.md",
-      "hash": "0x23a67abe848c7292"
+      "hash": "0x8f9f5eb3d5567659"
     },
     {
       "path": ".claude/skills/gg/SKILL.md",
@@ -219,7 +219,7 @@
     },
     {
       "path": ".claude/skills/translate/SKILL.md",
-      "hash": "0x7935395ce42aedfa"
+      "hash": "0x3b34cef6c2b790a8"
     },
     {
       "path": ".claude/skills/vscode/SKILL.md",
@@ -267,7 +267,7 @@
     },
     {
       "path": "doc/guides/develop-guide.md",
-      "hash": "0xed4328d138fe76ef"
+      "hash": "0x4c378a55b3c4773b"
     },
     {
       "path": "doc/guides/develop-without-ai-guide.md",
@@ -283,7 +283,7 @@
     },
     {
       "path": "doc/guides/for-ai/ai-dev-guide.md",
-      "hash": "0x85d7c0ae495a2d92"
+      "hash": "0x36b5eea5ab17cb90"
     },
     {
       "path": "doc/guides/for-ai/ai-review-guide.md",
@@ -375,7 +375,7 @@
     },
     {
       "path": "doc/guides/translate-guide.md",
-      "hash": "0x9ed294693fdcea87"
+      "hash": "0xa677037143b642e7"
     },
     {
       "path": "doc/guides/vscode-guide.md",

@@ -13,7 +13,8 @@ creates and pushes the version tags. It is interactive — the user runs it.
 - Every repo of the ticket is committed and pushed.
 - The pull requests created by `gg do review` are green.
 - Every repo with `doc/guides/blog-guide.md` holds the post of this ticket
-  in `doc/blog/<yyyy>`. If one is missing, go back to `/gg-review`.
+  in `doc/blog/<yyyy>`, a project management repo in
+  `doc/<yyyy>-Q<n>/blog`. If one is missing, go back to `/gg-review`.
 
 ## 2. Configure the publish
 
@@ -34,7 +35,7 @@ ticket folder. Fill in the real workspace root and ticket folder:
 
 ```bash
 cd ~/dev/ # workspace root
-gg do publish -i GGS-145
+gg do publish -i fix_login_crash
 ```
 
 At the end gg moves the ticket folder to the trash. Windows refuses to move

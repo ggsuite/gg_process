@@ -53,7 +53,7 @@ git merge --abort
 
 ```bash
 cd ~/dev/ # workspace root
-rm -rf GGS-145
+rm -rf fix_login_crash
 ```
 
 On Windows, no terminal and no VS Code window may sit in the ticket folder —
