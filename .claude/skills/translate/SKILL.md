@@ -27,8 +27,7 @@ Report three groups:
 - pairs whose newer side changed after the older one, from `git log -1`
 
 Cover the blog the same way: `doc/blog/<yyyy>` against
-`doc/de/blog/<yyyy>`, in a project management repo `doc/<yyyy>-Q<n>/blog`
-against `doc/de/<yyyy>-Q<n>/blog`.
+`doc/de/blog/<yyyy>`.
 
 Stop here and report when every pair is complete and current — there is
 nothing to translate.

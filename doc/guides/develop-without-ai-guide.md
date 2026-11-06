@@ -61,12 +61,6 @@ gg do review
 
 ## Publish
 
-Publish from the workspace root and name the ticket with `-i`:
-
 ```bash
-cd ~/dev/
-gg do publish -i <ticket>
+gg do publish
 ```
-
-At the end gg moves the ticket folder to the trash. On Windows this fails
-while a terminal sits in the ticket folder ("used by another process").

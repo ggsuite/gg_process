@@ -52,12 +52,9 @@ git merge --abort
 ## 3. Remove the ticket folder
 
 ```bash
-cd ~/dev/ # workspace root
-rm -rf fix_login_crash
+cd ~/dev/ # workspace
+rm -rf tickets/GGS-145
 ```
-
-On Windows, no terminal and no VS Code window may sit in the ticket folder —
-otherwise the deletion fails with "used by another process".
 
 ## 4. Update the workspace
 
