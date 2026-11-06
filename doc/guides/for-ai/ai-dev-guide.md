@@ -30,7 +30,7 @@ question and never as a plain prose question:
 ```bash
 cd ~/dev/ # workspace
 gg do create ticket GGS-145 -m"Fix issue abc"
-cd tickets/GGS-145
+cd GGS-145
 ```
 
 ## Choose the project management repo — or work without one
@@ -169,7 +169,9 @@ ticket.
   [Describe every repo in its own terms](#describe-every-repo-in-its-own-terms)).
   Keep every repo in its scope while you code: stop and propose a split,
   a new repo or a move as soon as code does not fit (see
-  [Keep every repo in its scope](#keep-every-repo-in-its-scope))
+  [Keep every repo in its scope](#keep-every-repo-in-its-scope)).
+  Before each change, if the repo has `doc/guides/architecture-guide.md`,
+  decide where the code goes as its `@placement` describes
 - Plan only: skip this step. The following steps then apply to the project
   management repo only.
 
@@ -319,7 +321,8 @@ gg do review
 ```
 
 gg creates pull requests for each repo and prints the URLs to the
-terminal.
+terminal. Print every URL to the user, one line per repo, and open each
+pull request without auto-merge in the browser.
 
 Afterwards load the review-light skill and execute it.
 
@@ -329,11 +332,17 @@ Afterwards load the review-light skill and execute it.
   of each repo — `gg do publish` offers them as defaults
 - If the ticket was only planned, publish the project management repo only
 
-Ask the user to run the following command **manually**:
+Ask the user to run the following command **manually** from the workspace
+root, not from the ticket folder:
 
 ```bash
-gg do publish
+cd ~/dev/ # workspace root
+gg do publish -i GGS-145
 ```
+
+At the end gg moves the ticket folder to the trash. Windows refuses to move
+a folder a terminal sits in ("used by another process", errno 32), so the
+terminal must stay outside the ticket — `-i` names the ticket instead.
 
 gg triggers the pull request merge and publishes the changes to the
 registry. Finally the version tag is created and pushed.

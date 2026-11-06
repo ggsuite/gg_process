@@ -23,7 +23,7 @@ and never as a plain prose question:
 ```bash
 cd ~/dev/ # workspace
 gg do create ticket GGS-145 -m"Fix issue abc"
-cd tickets/GGS-145
+cd GGS-145
 ```
 
 ## 3. Choose the project management repo — or work without one
