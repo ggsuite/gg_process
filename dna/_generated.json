@@ -93,9 +93,9 @@
       "name": "dna-gg",
       "package": "@ggdna/dna-gg",
       "ecosystem": "node",
-      "resolvedVersion": "1.5.0",
+      "resolvedVersion": "1.5.1",
       "via": "dna-ggsuite",
-      "hash": "0x59ecfaa7ff05bf15"
+      "hash": "0xf809b20d01f13cce"
     },
     {
       "name": "dna-ggsuite",
@@ -179,7 +179,7 @@
     },
     {
       "path": ".claude/skills/gg-ticket/SKILL.md",
-      "hash": "0x8f9f5eb3d5567659"
+      "hash": "0xa44f6e5ad54a6d0b"
     },
     {
       "path": ".claude/skills/gg/SKILL.md",
@@ -271,7 +271,7 @@
     },
     {
       "path": "doc/guides/develop-without-ai-guide.md",
-      "hash": "0x24e08f10182b4d35"
+      "hash": "0x88551202636c10c0"
     },
     {
       "path": "doc/guides/dna-guides-guide.md",
@@ -283,7 +283,7 @@
     },
     {
       "path": "doc/guides/for-ai/ai-dev-guide.md",
-      "hash": "0x36b5eea5ab17cb90"
+      "hash": "0x66658aeee6353ced"
     },
     {
       "path": "doc/guides/for-ai/ai-review-guide.md",

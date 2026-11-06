@@ -22,11 +22,14 @@ If you have not done that yet:
 cd ~/dev/
 ```
 
-## Add tickets
+## Add repos to the ticket
 
 ```bash
 gg do add repo1 repo2
 ```
+
+Name all repos in one call: every call refreshes the ocean and builds
+the dependency graph again.
 
 ## Open the workspace in Vscode
 
