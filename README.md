@@ -9,4 +9,7 @@ Windows starts a bare command name only as `.exe` or `.com`. Tools such as
 `Process.run('flutter', …)` fails there unless `runInShell` is set.
 `GgProcessDelegate` therefore looks such a name up on `PATH` the way cmd does
 and starts the batch file by its full path. A name Windows finds as `.exe` or
-`.com` first stays as it is.
+`.com` first stays as it is — on `PATH`, or in the folder of the running
+executable, which Windows searches before `PATH`. So `dart` started from
+`dart.exe` stays that `dart.exe`, even when Flutter puts a `dart.bat` on
+`PATH`.
