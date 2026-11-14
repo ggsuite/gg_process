@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0 - 2026-11-14
+
+### Added
+
+- Add GgProcessScope to cancel a group of processes
+- Add the blog post and describe GgProcessScope
+
 ## 1.4.1 - 2026-11-06
 
 ### Changed

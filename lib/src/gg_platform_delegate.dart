@@ -34,6 +34,20 @@ class GgPlatformDelegate {
   /// The full path of the executable running the current process.
   String get resolvedExecutable => io.Platform.resolvedExecutable;
 
+  /// The number of processors of the machine: how many things it can do at
+  /// the same time. 1 when the host cannot tell.
+  int get numberOfProcessors {
+    try {
+      return io.Platform.numberOfProcessors;
+    }
+    // coverage:ignore-start
+    on UnsupportedError {
+      // A Wasm build has no dart:io to ask.
+      return 1;
+    }
+    // coverage:ignore-end
+  }
+
   /// True on Windows.
   bool get isWindows => operatingSystem == 'windows';
 

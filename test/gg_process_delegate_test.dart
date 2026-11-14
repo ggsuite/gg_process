@@ -156,5 +156,67 @@ void main() {
         expect(await process.exitCode, 0);
       });
     });
+
+    // #########################################################################
+    group('inside a GgProcessScope', () {
+      late _RecordingDelegate delegate;
+
+      setUp(() {
+        delegate = _RecordingDelegate();
+        GgProcessDelegate.current = delegate;
+      });
+
+      test('ggRunProcess runs while the scope is not cancelled', () async {
+        final scope = GgProcessScope();
+
+        final result = await scope.run(() => ggRunProcess('ls', ['-la']));
+
+        expect(result.stdout, 'recorded-stdout');
+        expect(delegate.calls, ['run ls -la @null']);
+      });
+
+      test('ggRunProcess runs nothing once the scope is cancelled', () async {
+        final scope = GgProcessScope()..cancel();
+
+        await expectLater(
+          scope.run(() => ggRunProcess('ls', ['-la'])),
+          throwsA(isA<GgProcessCancelled>()),
+        );
+        expect(delegate.calls, isEmpty);
+      });
+
+      test('ggStartProcess starts while the scope is not cancelled', () async {
+        final scope = GgProcessScope();
+
+        final process = await scope.run(() => ggStartProcess('ls', ['-la']));
+
+        expect(await process.exitCode, 0);
+        expect(delegate.calls, ['start ls -la']);
+      });
+
+      test('ggStartProcess starts nothing once the scope is '
+          'cancelled', () async {
+        final scope = GgProcessScope()..cancel();
+
+        await expectLater(
+          scope.run(() => ggStartProcess('ls', ['-la'])),
+          throwsA(isA<GgProcessCancelled>()),
+        );
+        expect(delegate.calls, isEmpty);
+      });
+
+      test('ggStartProcess leaves a detached process out of the '
+          'scope', () async {
+        final scope = GgProcessScope();
+
+        final process = await scope.run(
+          () => ggStartProcess('code', ['.'], mode: ProcessStartMode.detached),
+        );
+        scope.cancel();
+
+        // The fake process would report -9 had the scope killed it.
+        expect(await process.exitCode, 0);
+      });
+    });
   });
 }

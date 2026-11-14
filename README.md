@@ -13,3 +13,18 @@ and starts the batch file by its full path. A name Windows finds as `.exe` or
 executable, which Windows searches before `PATH`. So `dart` started from
 `dart.exe` stays that `dart.exe`, even when Flutter puts a `dart.bat` on
 `PATH`.
+
+## Cancelling a group of processes
+
+`GgProcessScope` groups the processes a piece of code starts, so they can
+be stopped together. `scope.run(...)` runs a job in the scope; the scope
+travels with the zone, also into asynchronous and nested calls.
+`scope.cancel()` kills the processes started with `ggStartProcess` that
+still run and makes every further process fail with a
+`GgProcessCancelled`. Processes run with `ggRunProcess` — the short ones,
+git above all — are left to finish. `GgProcessScope.shield(...)` takes a
+step out of the scopes around it, and `beforeKill` lets a scope wait for a
+safe moment before a process is killed.
+
+`ggPlatform.numberOfProcessors` tells how many processors the machine has;
+a `GgPlatformDelegate` replaces it in tests.

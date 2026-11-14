@@ -45,6 +45,7 @@ void main() {
         expect(delegate.operatingSystem, io.Platform.operatingSystem);
         expect(delegate.pathSeparator, io.Platform.pathSeparator);
         expect(delegate.resolvedExecutable, io.Platform.resolvedExecutable);
+        expect(delegate.numberOfProcessors, io.Platform.numberOfProcessors);
         expect(delegate.isWindows, io.Platform.isWindows);
         expect(delegate.isMacOS, io.Platform.isMacOS);
         expect(delegate.isLinux, io.Platform.isLinux);
