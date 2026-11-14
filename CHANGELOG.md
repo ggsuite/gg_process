@@ -1,15 +1,11 @@
 # Changelog
 
-## Unreleased
+## 1.5.0 - 2026-11-14
 
 ### Added
 
 - Add GgProcessScope to cancel a group of processes
 - Add the blog post and describe GgProcessScope
-
-Add the blog post of the change
-README: cancelling a group of processes
-Tighten the dependencies
 
 ## 1.4.1 - 2026-11-06
 
