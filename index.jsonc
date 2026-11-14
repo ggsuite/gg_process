@@ -14,7 +14,8 @@
   // 1-3 bullet points: the problem space.
   "domain": [
     "process execution: GgProcessDelegate (dart:io or a host, e.g. Node), GgProcessWrapper, ggRunProcess / ggStartProcess, GgFakeProcess",
-    "platform: GgPlatformDelegate (environment, operating system, exit code), ggPlatform, ggExitCode",
+    "cancelling: GgProcessScope groups the processes of a job; cancel kills the started ones and refuses further ones, shield exempts a step",
+    "platform: GgPlatformDelegate (environment, operating system, number of processors, exit code), ggPlatform, ggExitCode",
     "Windows: GgWindowsExecutable starts batch files such as flutter, npm, pnpm by their full path, so no shell is needed",
   ],
 

@@ -9,5 +9,6 @@ library;
 export 'src/gg_fake_process.dart';
 export 'src/gg_platform_delegate.dart';
 export 'src/gg_process_delegate.dart';
+export 'src/gg_process_scope.dart';
 export 'src/gg_process_wrapper.dart';
 export 'src/gg_windows_executable.dart';

@@ -7,6 +7,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'gg_process_scope.dart';
 import 'gg_windows_executable.dart';
 
 /// Performs the actual process execution for the whole gg suite.
@@ -113,6 +114,9 @@ typedef GgRunProcess = Future<ProcessResult> Function(
 // .............................................................................
 /// Drop-in replacement for `Process.run` routing through
 /// [GgProcessDelegate.current].
+///
+/// Inside a cancelled [GgProcessScope] nothing is run and a
+/// [GgProcessCancelled] is thrown.
 Future<ProcessResult> ggRunProcess(
   String executable,
   List<String> arguments, {
@@ -122,20 +126,28 @@ Future<ProcessResult> ggRunProcess(
   bool runInShell = false,
   Encoding? stdoutEncoding = systemEncoding,
   Encoding? stderrEncoding = systemEncoding,
-}) => GgProcessDelegate.current.run(
-  executable,
-  arguments,
-  workingDirectory: workingDirectory,
-  environment: environment,
-  includeParentEnvironment: includeParentEnvironment,
-  runInShell: runInShell,
-  stdoutEncoding: stdoutEncoding,
-  stderrEncoding: stderrEncoding,
-);
+}) async {
+  GgProcessScope.current?.throwIfCancelled(executable, arguments);
+
+  return GgProcessDelegate.current.run(
+    executable,
+    arguments,
+    workingDirectory: workingDirectory,
+    environment: environment,
+    includeParentEnvironment: includeParentEnvironment,
+    runInShell: runInShell,
+    stdoutEncoding: stdoutEncoding,
+    stderrEncoding: stderrEncoding,
+  );
+}
 
 // .............................................................................
 /// Drop-in replacement for `Process.start` routing through
 /// [GgProcessDelegate.current].
+///
+/// Inside a [GgProcessScope] the process is killed when the scope is
+/// cancelled; inside a cancelled one nothing is started and a
+/// [GgProcessCancelled] is thrown.
 Future<Process> ggStartProcess(
   String executable,
   List<String> arguments, {
@@ -144,12 +156,26 @@ Future<Process> ggStartProcess(
   bool includeParentEnvironment = true,
   bool runInShell = false,
   ProcessStartMode mode = ProcessStartMode.normal,
-}) => GgProcessDelegate.current.start(
-  executable,
-  arguments,
-  workingDirectory: workingDirectory,
-  environment: environment,
-  includeParentEnvironment: includeParentEnvironment,
-  runInShell: runInShell,
-  mode: mode,
-);
+}) async {
+  final scope = GgProcessScope.current;
+  scope?.throwIfCancelled(executable, arguments);
+
+  final process = await GgProcessDelegate.current.start(
+    executable,
+    arguments,
+    workingDirectory: workingDirectory,
+    environment: environment,
+    includeParentEnvironment: includeParentEnvironment,
+    runInShell: runInShell,
+    mode: mode,
+  );
+
+  // A detached process has no exit code to wait for, and it is meant to
+  // outlive whoever started it.
+  if (mode == ProcessStartMode.normal ||
+      mode == ProcessStartMode.inheritStdio) {
+    scope?.track(process, workingDirectory: workingDirectory);
+  }
+
+  return process;
+}

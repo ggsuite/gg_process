@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add GgProcessScope to cancel a group of processes
+
+A cancelled scope kills the processes it started and refuses further ones
+GgProcessScope.shield takes steps that must not stop half way out of a scope; beforeKill waits for a safe moment to kill
+GgPlatformDelegate reports the number of processors
+
 ## 1.4.1 - 2026-11-06
 
 ### Changed
