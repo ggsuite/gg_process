@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Add GgProcessDelegate.runWith: a delegate for the processes of one piece of code
+
 ### Changed
 
 - Upgrade the DNA

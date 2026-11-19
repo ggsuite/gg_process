@@ -26,5 +26,14 @@ git above all — are left to finish. `GgProcessScope.shield(...)` takes a
 step out of the scopes around it, and `beforeKill` lets a scope wait for a
 safe moment before a process is killed.
 
+## A delegate for one piece of code
+
+`GgProcessDelegate.runWith(delegate, body)` lets `delegate` execute the
+processes `body` runs or starts — only those: like a `GgProcessScope`, the
+choice travels with the zone, and code running at the same time keeps
+`GgProcessDelegate.current`. A delegate that adds to what processes do
+forwards to the one it replaces, read as `current` before the call. gg_git
+watches every git network command this way while `GitRetry` runs it.
+
 `ggPlatform.numberOfProcessors` tells how many processors the machine has;
 a `GgPlatformDelegate` replaces it in tests.
