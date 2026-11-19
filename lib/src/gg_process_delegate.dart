@@ -4,6 +4,7 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -70,12 +71,28 @@ class GgProcessDelegate {
   );
 
   // ...........................................................................
-  /// The delegate the gg suite currently executes processes with.
-  static GgProcessDelegate get current => _current;
+  /// The delegate the gg suite currently executes processes with: the one
+  /// [runWith] installed for the running code, else the one set here.
+  static GgProcessDelegate get current =>
+      (Zone.current[_zoneKey] as GgProcessDelegate?) ?? _current;
 
   /// Replaces the delegate. Pass `null` to restore [defaultDelegate].
+  ///
+  /// Inside [runWith] the delegate given there still wins.
   static set current(GgProcessDelegate? delegate) =>
       _current = delegate ?? defaultDelegate;
+
+  // ...........................................................................
+  /// Runs [body] with [delegate] executing the processes it starts — only
+  /// those: code running at the same time outside [body] keeps its
+  /// delegate. The choice travels with the [Zone], like a [GgProcessScope].
+  ///
+  /// To add to what processes do, [delegate] forwards to the delegate it
+  /// replaces, read as [current] before the call.
+  static R runWith<R>(GgProcessDelegate delegate, R Function() body) =>
+      runZoned(body, zoneValues: {_zoneKey: delegate});
+
+  static final Object _zoneKey = Object();
 
   /// The `dart:io` backed delegate used unless [current] is replaced.
   static const GgProcessDelegate defaultDelegate = GgProcessDelegate();

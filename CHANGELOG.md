@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.6.0 - 2026-11-19
+
+### Added
+
+- Add GgProcessDelegate.runWith: a delegate for the processes of one piece of code
 
 ### Changed
 

@@ -102,6 +102,40 @@ void main() {
         expect(delegate.calls, ['run git status @/tmp']);
       });
 
+      test('is the one runWith installed, for its body only', () async {
+        final global = _RecordingDelegate();
+        final local = _RecordingDelegate();
+        GgProcessDelegate.current = global;
+
+        final inside = GgProcessDelegate.runWith(local, () async {
+          await ggRunProcess('git', ['fetch']);
+          // Setting the delegate inside does not override runWith.
+          GgProcessDelegate.current = global;
+          await ggRunProcess('git', ['push']);
+          return GgProcessDelegate.current;
+        });
+        await ggRunProcess('git', ['status']);
+
+        expect(await inside, local);
+        expect(local.calls, ['run git fetch @null', 'run git push @null']);
+        expect(global.calls, ['run git status @null']);
+        expect(GgProcessDelegate.current, global);
+      });
+
+      test('runWith nests', () {
+        final outer = _RecordingDelegate();
+        final inner = _RecordingDelegate();
+
+        GgProcessDelegate.runWith(outer, () {
+          expect(GgProcessDelegate.current, outer);
+          GgProcessDelegate.runWith(inner, () {
+            expect(GgProcessDelegate.current, inner);
+          });
+          expect(GgProcessDelegate.current, outer);
+        });
+        expect(GgProcessDelegate.current, GgProcessDelegate.defaultDelegate);
+      });
+
       test('is used by GgProcessWrapper.start', () async {
         final delegate = _RecordingDelegate();
         GgProcessDelegate.current = delegate;
