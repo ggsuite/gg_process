@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Stay within major versions on dependency upgrades
+
 ## 1.6.0 - 2026-11-19
 
 ### Added
