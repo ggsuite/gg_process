@@ -210,12 +210,11 @@ packages:
     source: hosted
     version: "4.2.0"
   gg_args:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: gg_args
-      sha256: "16b93244b8a344bc9899230cc9556dc142b54a880f65e1ea36ec7293ca8f982b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../gg_args"
+      relative: true
+    source: path
     version: "3.2.1"
   gg_capture_print:
     dependency: "direct dev"
